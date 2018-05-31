@@ -1,5 +1,6 @@
-#This script downloads a list of companies in the SP500.  It has the ticker symbol, company name, and sector.
-#Data is saved to csv file.
+# This script downloads a list of companies in the SP500.  
+# It has the ticker symbol, company name, and sector.
+# Data is saved to csv file.
 
 #Code from: https://datahub.io/core/s-and-p-500-companies#pandas
 import datapackage
@@ -15,5 +16,4 @@ resources = package.resources
 for resource in resources:
 	if resource.tabular:
 		data = pd.read_csv(resource.descriptor['path'])
-		#print(data)
 		data.to_csv('SP500_list.csv',index = False)
