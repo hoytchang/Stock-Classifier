@@ -5,11 +5,7 @@ import numpy as np
 
 # Read in csv file containing list of stocks.
 data = pd.read_csv('SP500_list.csv', index_col = False)
-
-# Both classes of Alphabet (GOOGL and GOOG) are listed.  Remove GOOGL.  Keep GOOG.
-index = data[data['Symbol']=='GOOGL'].index.item()
-data = data.drop([index])
-data = data.reset_index() # Reset the index so you don't have a gap where the row was dropped.
+print('Number of stocks in list: ' + str(len(data)))
 
 # Add new columns to 'data'
 data['ROE'] = np.zeros(len(data)) #return on equity
@@ -21,11 +17,13 @@ data['Asset_turn'] = np.zeros(len(data)) #asset turn
 
 # Loop through each stock
 delete_index = []
-for index in range(len(data['Symbol'])):
+count_Zeros = 0
+for index in range(len(data)):
 	# Get ticker symbol
 	ticker = data.loc[index]['Symbol']
 
-	# Fix ticker mis-matches.  This solution is cumbersome, but will do for now.
+	# Fix ticker mis-matches.  This is a result of getting data from two different sources.
+	# This solution is cumbersome, but will do for now.
 	if ticker == 'AAL':
 		ticker = 'AMR'
 	if ticker == 'ANDV':
@@ -93,15 +91,29 @@ for index in range(len(data['Symbol'])):
 		data.loc[index, 'PE_ratio'] = PE_ratio
 		data.loc[index, 'Net_margin'] = Net_margin
 		data.loc[index, 'Asset_turn'] = Asset_turn
-
 	except:
-		print('could not get url: ' + url)
-		# For tickers where url csv was not found, delete that row from 'data'
+		count_Zeros += 1
 		delete_index.append(index)
 
-# Remove rows where data was not found
-print('Could not find ' + len(delete_index) + ' stocks out of '+ len(data) + '.')
-for i in delete_index:
-	print('could not find: '+data.loc[i]['Symbol'])
+# Data from stockpup is spotty.  There are fields with 'None' entries.
+# Remove rows if any of the entries are 'None'.
+# Remove rows if all the entries are 0, meaning the csv was not found.
+count_None = 0
+for index in range(len(data)):
+	if data.iloc[index].loc['ROE'] == 'None' or \
+		data.iloc[index].loc['ROA'] == 'None' or \
+		data.iloc[index].loc['PB_ratio'] == 'None' or \
+		data.iloc[index].loc['PE_ratio'] == 'None' or \
+		data.iloc[index].loc['Net_margin'] == 'None' or \
+		data.iloc[index].loc['Asset_turn'] == 'None':
+		count_None += 1
+		delete_index.append(index)
+data = data.drop(delete_index)
+
+# Summarize stocks that were removed
+print('Number of stocks with missing data entries: ' + str(count_None))
+print('Number of stocks with no data at all: ' + str(count_Zeros))
+print('Number of stocks with data: ' + str(len(data)))
 
 # Save data as 'SP500_financials.csv'
+data.to_csv('SP500_financial_data.csv',index = False)
