@@ -7,6 +7,8 @@ Sci Kit Learn and TensorFlow will be used to build a machine learning model.  <b
 
 ### Data
 
-First, run download_SP500_list.py, which will download a list of companies in the S&P 500 index, including ticker symbol, company name, and the sector it belongs in.  The data is from datahub.io and is saved in SP500_list.csv.  <br>
+First, run `download_SP500_list.py`, which will download a list of companies in the S&P 500 index, including ticker symbol, company name, and the sector it belongs in.  The data is from datahub.io and is saved in `SP500_list.csv`.  <br>
 
-Next, run get_financial_data.py, which will cycle through each company in the list, and get financial data from stockpup.com.  The data is spotty: some companies are missing, and some companies have certain data entries that are missing.  Six financial metrics are selected: ROE, ROA, PB_ratio, PE_ratio, Net_margin, Asset_turn.  The companies with missing data are moved, and the data is saved in SP500_financial_data.csv.  <br>
+Next, run `get_financial_data.py`, which will cycle through each company in the list, and get financial data from stockpup.com.  The data is spotty: some companies are missing, and some companies have certain data entries that are missing.  Six financial metrics are selected: ROE, ROA, PB_ratio, PE_ratio, Net_margin, Asset_turn as potential features that could be meaningful in describing the company.  The companies with missing data are moved, and the data is saved in `SP500_financial_data.csv`.  <br>
+
+Eye-balling the data, we see that the PE_ratio column has data that fluctuates wildly.  In particular, Salesforce has a PE_ratio many orders of magnitude higher than any other company.  This is likely due to an very low denominator (earnings) and high numerator (price).  This extreme outlier may cause problems in training the machine learning model.
