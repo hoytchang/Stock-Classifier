@@ -27,7 +27,7 @@ We create histogram and scatter plots on the data to see if there are any obviou
 
 ![alt text](https://github.com/hoytchang/Stock-Classifier/blob/master/Figure_2.png)
 
-In the ROA vs ROE scatter plot below, we see some correlation between those two features.  This is not surprising, because ROA and ROE have the same numberator, which is earnings.
+In the ROA vs ROE scatter plot below, we see some correlation between those two features.  This is not surprising, because ROA and ROE have the same numerator, which is earnings.
 
 ![alt text](https://github.com/hoytchang/Stock-Classifier/blob/master/Figure_9.png)
 
