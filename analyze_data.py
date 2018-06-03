@@ -102,6 +102,7 @@ Net_margin_by_sector = organize_feature_by_sector('Net_margin')
 Asset_turn_by_sector = organize_feature_by_sector('Asset_turn')
 
 plt.figure(3)
+plt.rc('xtick', labelsize = 10)
 plt.hist(ROE_by_sector, bins = 30, histtype = 'bar', stacked = True, color = colors, label = labels)
 plt.title('ROE Histogram by Sector')
 plt.xlabel('ROE')
@@ -142,6 +143,30 @@ plt.title('Asset Turnover Histogram by Sector')
 plt.xlabel('Asset Turnover')
 plt.ylabel('Frequency')
 plt.legend(loc = 'upper right')
+
+# Generate scatter plots
+plt.figure(9)
+for i in range(len(ROE_by_sector)):
+	plt.scatter(ROE_by_sector[i], ROA_by_sector[i], c = colors[i], s = 5, label = labels[i])
+plt.xlabel('ROE')
+plt.ylabel('ROA')
+plt.legend(loc = 'best', fontsize = 6)
+
+plt.figure(10)
+for i in range(len(PB_by_sector)):
+	plt.scatter(PB_by_sector[i], PE_by_sector[i], c = colors[i], s = 5, label = labels[i])
+plt.xlabel('PB ratio')
+plt.ylabel('PE ratio')
+plt.legend(loc = 'best', fontsize = 6)
+plt.ylim(0,100)
+
+plt.figure(11)
+for i in range(len(Net_margin_by_sector)):
+	plt.scatter(Net_margin_by_sector[i], Asset_turn_by_sector[i], c = colors[i], s = 5, label = labels[i])
+plt.xlabel('Net Margin')
+plt.ylabel('Asset Turnover')
+plt.legend(loc = 'best', fontsize = 6)
+plt.xlim(0,0.6)
 
 # Show plots
 plt.show()
