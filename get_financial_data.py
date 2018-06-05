@@ -15,6 +15,13 @@ data['PE_ratio'] = np.zeros(len(data)) #price to earnings ratio
 data['Net_margin'] = np.zeros(len(data)) #net margin
 data['Asset_turn'] = np.zeros(len(data)) #asset turn
 
+data['Div_payout_ratio'] = np.zeros(len(data)) #dividend payout ratio
+data['LT_debt_to_equity'] = np.zeros(len(data)) #Long term debt to equity ratio
+data['Equity_to_assets'] = np.zeros(len(data)) #Equity to assets ratio
+data['Current_ratio'] = np.zeros(len(data)) #Current ratio
+data['Div_yield'] = np.zeros(len(data)) #Dividend yield
+data['Capex_to_revenue'] = np.zeros(len(data)) #Capital expenditures to revenue ratio
+
 # Loop through each stock
 delete_index = []
 count_Zeros = 0
@@ -84,6 +91,18 @@ for index in range(len(data)):
 		Net_margin = latest['Net margin']
 		Asset_turn = latest['Asset turnover']
 
+		Div_payout_ratio = latest['Dividend payout ratio']
+		LT_debt_to_equity = latest['Long-term debt to equity ratio']
+		Equity_to_assets = latest['Equity to assets ratio']
+		Current_ratio = latest['Current ratio']
+		Div_per_share = latest['Dividend per share']
+		Price = latest['Price']
+		Capex = latest['Capital expenditures']
+		Revenue = latest['Revenue']
+
+		Div_yield = float(Div_per_share) / float(Price)
+		Capex_to_revenue = float(Capex) / float(Revenue)
+
 		# Store financial data into "data"
 		data.loc[index, 'ROE'] = ROE
 		data.loc[index, 'ROA'] = ROA
@@ -91,6 +110,13 @@ for index in range(len(data)):
 		data.loc[index, 'PE_ratio'] = PE_ratio
 		data.loc[index, 'Net_margin'] = Net_margin
 		data.loc[index, 'Asset_turn'] = Asset_turn
+
+		data.loc[index, 'Div_payout_ratio'] = Div_payout_ratio
+		data.loc[index, 'LT_debt_to_equity'] = LT_debt_to_equity
+		data.loc[index, 'Equity_to_assets'] = Equity_to_assets
+		data.loc[index, 'Current_ratio'] = Current_ratio
+		data.loc[index, 'Div_yield'] = Div_yield
+		data.loc[index, 'Capex_to_revenue'] = Capex_to_revenue
 	except:
 		count_Zeros += 1
 		delete_index.append(index)
@@ -105,7 +131,13 @@ for index in range(len(data)):
 		data.iloc[index].loc['PB_ratio'] == 'None' or \
 		data.iloc[index].loc['PE_ratio'] == 'None' or \
 		data.iloc[index].loc['Net_margin'] == 'None' or \
-		data.iloc[index].loc['Asset_turn'] == 'None':
+		data.iloc[index].loc['Asset_turn'] == 'None' or \
+		data.iloc[index].loc['Div_payout_ratio'] == 'None' or \
+		data.iloc[index].loc['LT_debt_to_equity'] == 'None' or \
+		data.iloc[index].loc['Equity_to_assets'] == 'None' or \
+		data.iloc[index].loc['Current_ratio'] == 'None' or \
+		data.iloc[index].loc['Div_yield'] == 'None' or \
+		data.iloc[index].loc['Capex_to_revenue'] == 'None':
 		count_None += 1
 		delete_index.append(index)
 data = data.drop(delete_index)
