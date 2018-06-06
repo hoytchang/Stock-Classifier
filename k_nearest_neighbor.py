@@ -32,10 +32,20 @@ for i in range(10):
 	cutoff = int(len(data)*0.8) 
 	training_data = data.iloc[0: cutoff]
 	test_data = data.iloc[cutoff:len(data)]
-	X_train = training_data[['ROE','ROA','PB_ratio','PE_ratio','Net_margin','Asset_turn',\
-		'Div_payout_ratio','LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
-	X_test = test_data[['ROE','ROA','PB_ratio','PE_ratio','Net_margin','Asset_turn',\
-		'Div_payout_ratio','LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
+
+	# Use all 12 features
+	#X_train = training_data[['ROE','ROA','PB_ratio','PE_ratio','Net_margin','Asset_turn',\
+	#	'Div_payout_ratio','LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
+	#X_test = test_data[['ROE','ROA','PB_ratio','PE_ratio','Net_margin','Asset_turn',\
+	#	'Div_payout_ratio','LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
+	
+	# Use fewer features
+	X_train = training_data[['ROE','ROA','PB_ratio','Asset_turn',\
+		'LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
+	X_test = test_data[['ROE','ROA','PB_ratio','Asset_turn',\
+		'LT_debt_to_equity','Equity_to_assets','Current_ratio','Div_yield','Capex_to_revenue']]
+
+	# Labels
 	Y_train = training_data['Sector Encoded']
 	Y_test = test_data['Sector Encoded']
 
