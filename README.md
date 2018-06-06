@@ -3,13 +3,13 @@ Classify stocks in the S&P 500 using machine learning.  The features will be fin
 
 The idea here is that financial ratios such as return on equity and profit margin should give us clues to what type of company the stock is.  For example, software companies might have higher margins, while a manufacturing company might have lower margins.  <br>
 
-Scikit-learn and TensorFlow will be used to build machine learning models.  <br>
+Scikit-learn will be used to build machine learning models.  <br>
 
 ### Data
 
 First, run `download_SP500_list.py`, which will download a list of companies in the S&P 500 index, including ticker symbol, company name, and the sector it belongs in.  The data is from datahub.io and is saved in `SP500_list.csv`.  <br>
 
-Next, run `get_financial_data.py`, which will cycle through each company in the list, and get financial data from stockpup.com.  The data is spotty: some companies are missing, and some companies have certain data entries that are missing.  Six financial metrics are selected as potential features that could be meaningful in describing the company: 
+Next, run `get_financial_data.py`, which will cycle through each company in the list, and get financial data from stockpup.com.  The data is spotty: some companies are missing, and some companies have certain data entries that are missing.  Twelve financial metrics are selected as potential features that could be meaningful in describing the company: 
 * ROE (return on equity)
 * ROA (return on assets)
 * PB_ratio (price to book ratio)
@@ -48,3 +48,17 @@ The next scatter plot is asset turnover and net margin.  We notice that some sec
 In general, the scatter plots look very noisy, and visually it does not appear to readily seperate the data points into sectors.  <br>
 
 ### K-Nearest Neighbors Model
+
+Running `k_nearest_neighbor.py` will clean up the data, and build a model and test it.  First, it removes outliers, then removes the sectors with too few data points.  The data is split into 80% training and 20% test.  Using scikit-learn, a K-Nearest Neighbor model is built using the training data, and is tested using test data.  This process is done 10 times for cross-validation.  The average accuracy is around 0.23.  Considering there are 8 sectors, random guessing would result in 1/8 = 0.125.  So the model we built is a bit better than random guessing, but not by much.
+
+### How to improve the model
+
+Better feature selection might come a long way towards improving the accuracy of the model.  The data is very noisy, and some of the features look like they have more predictive power than other features.  Finding newer better features, or maybe even removing useless features could help.  <br>
+
+The features PE_ratio, Net_margin and Div_payout_ratio were removed because they don't visually look like they separate the data in the scatter plots.  This results in the model accuracy increasing to about 0.29.  This seems to be a significant improvement, for doing almost no additional work. This confirms the importance of feature selection. If removing useless features can help, then almost certainly adding better features would help even more.  <br> 
+
+Instead of using only the latest quarter's financial data, historic financial data could be used.  We could also use the standard deviation of a financial ratio, because we expect some types of companies to be stable over time, while other companies are more variable over time, due to seasonality or market cycles.  <br>
+
+There could be a lot of variability within a sector.  For example, the IT sector contains both software and hardware.  So instead of predicting sector, we could predict the industry within a sector.  However, this would increase the number of categories, and we would need to make sure we have enough data points. <br>
+
+A more sophisticated model might help.  A neural network, for example, might be able to use complex relationships in the data that a simple model cannot.
