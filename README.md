@@ -55,7 +55,9 @@ Running `k_nearest_neighbor.py` will clean up the data, and build a model and te
 
 Better feature selection might come a long way towards improving the accuracy of the model.  The data is very noisy, and some of the features look like they have more predictive power than other features.  Finding newer better features, or maybe even removing useless features could help.  <br>
 
-Instead of using only the latest quarter's financial data, historic financial data could be used.  We could also use the standard deviation of a financial ratio, because we expect some types of companies to be stable over time, while other companies are more variable over time.  <br>
+The features PE_ratio, Net_margin and Div_payout_ratio were removed because they don't visually look like they separate the data in the scatter plots.  This results in the model accuracy increasing to about 0.29.  This seems to be a significant improvement, for doing almost no additional work. This confirms the importance of feature selection. If removing useless features can help, then almost certainly adding better features would help even more.  <br> 
+
+Instead of using only the latest quarter's financial data, historic financial data could be used.  We could also use the standard deviation of a financial ratio, because we expect some types of companies to be stable over time, while other companies are more variable over time, due to seasonality or market cycles.  <br>
 
 There could be a lot of variability within a sector.  For example, the IT sector contains both software and hardware.  So instead of predicting sector, we could predict the industry within a sector.  However, this would increase the number of categories, and we would need to make sure we have enough data points. <br>
 
