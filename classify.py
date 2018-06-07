@@ -4,6 +4,7 @@ from sklearn.utils import shuffle
 from sklearn import preprocessing
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
+from sklearn import svm
 
 # Read in financial data
 data = pd.read_csv('SP500_financial_data.csv', index_col = False)
@@ -25,8 +26,9 @@ le = preprocessing.LabelEncoder()
 le.fit(data['Sector'])
 data['Sector Encoded'] = le.transform(data['Sector'])
 
-# Seperate the data into 70% training and 30% validation data sets
-accuracy_array = []
+# Separate the data into 80% training and 20% validation data sets
+accuracy_array_knn = []
+accuracy_array_svm = []
 for i in range(10):
 	data = shuffle(data)
 	cutoff = int(len(data)*0.8) 
@@ -55,9 +57,21 @@ for i in range(10):
 	neigh.fit(X_train, Y_train)
 	Y_predict = neigh.predict(X_test)
 
-	# Compute accuracy of model
+	# Compute accuracy of KNN
 	n_correct = np.sum(Y_predict == Y_test)
 	accuracy = n_correct / len(Y_predict)
-	print('Accuracy of K = ' +str(n_neighbors) + ' nearest neighbors: ' + str(accuracy)[0:5])
-	accuracy_array.append(accuracy)
-print('Accuracy of K = ' + str(n_neighbors) + ' nearest neighbors, average of 10 cross validations: ' + str(np.mean(accuracy_array))[0:5])
+	accuracy_array_knn.append(accuracy)
+
+	# Create SVM classification model
+	kernel = 'rbf'
+	clf = svm.SVC(kernel = kernel)
+	clf.fit(X_train, Y_train)
+	Y_predict = clf.predict(X_test)
+
+	# Compute accuracy of SVM
+	n_correct = np.sum(Y_predict == Y_test)
+	accuracy = n_correct / len(Y_predict)
+	accuracy_array_svm.append(accuracy)
+
+print('Accuracy of K = ' + str(n_neighbors) + ' nearest neighbors, average of 10 cross validations: ' + str(np.mean(accuracy_array_knn))[0:5])
+print('Accuracy of SVM with ' + kernel + ' kernel, average of 10 cross validations: ' + str(np.mean(accuracy_array_svm))[0:5])
