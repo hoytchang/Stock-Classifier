@@ -49,7 +49,7 @@ In general, the scatter plots look very noisy, and visually it does not appear t
 
 ### K-Nearest Neighbors Model
 
-Running `k_nearest_neighbor.py` will clean up the data, and build a model and test it.  First, it removes outliers, then removes the sectors with too few data points.  The data is split into 80% training and 20% test.  Using scikit-learn, a K-Nearest Neighbor model is built using the training data, and is tested using test data.  This process is done 10 times for cross-validation.  The average accuracy is around 0.23.  Considering there are 8 sectors, random guessing would result in 1/8 = 0.125.  So the model we built is a bit better than random guessing, but not by much.
+Running `classify.py` will clean up the data, and build a model and test it.  First, it removes outliers, then removes the sectors with too few data points.  The data is split into 80% training and 20% test.  Using scikit-learn, a K-Nearest Neighbor model is built using the training data, and is tested using test data.  This process is done 10 times for cross-validation.  The average accuracy is around 0.23.  Considering there are 8 sectors, random guessing would result in 1/8 = 0.125.  So the model we built is a bit better than random guessing, but not by much.
 
 ### How to improve the model
 
@@ -62,3 +62,7 @@ Instead of using only the latest quarter's financial data, historic financial da
 There could be a lot of variability within a sector.  For example, the IT sector contains both software and hardware.  So instead of predicting sector, we could predict the industry within a sector.  However, this would increase the number of categories, and we would need to make sure we have enough data points. <br>
 
 A more sophisticated model might help.  A neural network, for example, might be able to use complex relationships in the data that a simple model cannot.
+
+### Support vector machine classification
+
+In addition to the k-nearest neighbor, a support vector machine classification model is also included in `classify.py`.  The linear kernel gave somewhat better results than the rbf kernel, and also somewhat better than the KNN model.
