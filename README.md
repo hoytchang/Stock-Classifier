@@ -65,4 +65,4 @@ A more sophisticated model might help.  A neural network, for example, might be 
 
 ### Support vector machine classification
 
-In addition to the k-nearest neighbor, a support vector machine classification model is also included in `classify.py`.  The linear kernel gave somewhat better results (accuracy around 0.32) than the rbf kernel, and also somewhat better than the KNN model.
+In addition to the k-nearest neighbor, a support vector machine classification model is also included in `classify.py`.  Depending on which features are used, the linear kernel gave somewhat better results (accuracy around 0.32) than the rbf kernel, and also somewhat better than the KNN model.
