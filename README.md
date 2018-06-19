@@ -67,7 +67,7 @@ There could be a lot of variability within a sector.  For example, the IT sector
 
 A more sophisticated model might help.  A neural network, for example, might be able to use complex relationships in the data that a simple model cannot.
 
-An easy way to improve the model would be to simply the problem by using only sectors that clearly seperated by the features.  For example, Asset Turnover seems to clearly seperate Consumer Discretionary from Utilities.  So if we use only data points from those two sectors, the model we build would have high accuracy.
+An easy way to improve the model would be to simplify the problem by using only sectors that are clearly seperated by the features.  For example, Asset Turnover seems to clearly seperate Consumer Discretionary from Utilities.  So if we use only data points from those two sectors, the model we build would have high accuracy.
 
 ### Support vector machine classification
 
