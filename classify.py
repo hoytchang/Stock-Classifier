@@ -7,6 +7,7 @@ import numpy as np
 from sklearn import svm
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
+from sklearn.model_selection import validation_curve
 
 # Read in financial data
 data = pd.read_csv('SP500_financial_data.csv', index_col = False)
@@ -102,17 +103,18 @@ def plot_learning_curve(estimator, title, X, y, ylim = None, cv = None, n_jobs =
 # Plot validation curve
 def plot_validation_curve(estimator, title, X, y, param_name, param_range, ylim = None, cv = None, n_jobs = 1, train_size = np.linspace(0.1, 1.0, 5)):
 	plt.figure()
+	plt.title(title)
 	train_scores, test_scores = validation_curve(estimator, X, y, param_name, param_range, cv)
 	train_mean = np.mean(train_scores, axis = 1)
 	train_std = np.std(train_scores, axis = 1)
 	test_mean = np.mean(test_scores, axis = 1)
 	test_std = np.std(test_scores, axis = 1)
-	plt.plot(param_range, train_mean, color = 'r', marker = 'o', markersize = 5, label = 'Training score')
+	plt.plot(param_range, train_mean, 'o-', color = 'r',  markersize = 5, label = 'Training score')
 	plt.fill_between(param_range, train_mean + train_std, train_mean - train_std, alpha = 0.15, color = 'r')
-	plt.plot(param_range, test_mean, color = 'g', linestyle = '--', marker = 's', markersize = 5, label = 'Validation score')
+	plt.plot(param_range, test_mean, 'o-', color = 'g',  marker = 's', markersize = 5, label = 'Validation score')
 	plt.fill_between(param_range, test_mean + test_std, test_mean - test_std, alpha = 0.15, color = 'g')
 	plt.grid()
-	plt.xscale('log')
+	#plt.xscale('log')
 	plt.legend(loc = 'best')
 	plt.xlabel('Parameter')
 	plt.ylabel('Score')
@@ -129,4 +131,12 @@ neigh.fit(X_train, y_train)
 # Plot learning curves
 title = 'Learning Curves (KNN)'
 plot_learning_curve(neigh, title, X_train, y_train, ylim=(0.1, 1.01), cv=10, n_jobs=1)
+
+# Plot validation curves
+title = 'Validation Curve (KNN)'
+param_name = 'n_neighbors'
+param_range = [1, 2, 3, 4, 5, 6]
+plot_validation_curve(neigh, title, X_train, y_train, param_name = param_name, param_range = param_range)
+
+# Show plots
 plt.show()
