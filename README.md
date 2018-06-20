@@ -72,3 +72,11 @@ An easy way to improve the model would be to simplify the problem by using only 
 ### Support vector machine classification
 
 In addition to the k-nearest neighbor, a support vector machine classification model is also included in `classify.py`.  Depending on which features are used, the linear kernel gave somewhat better results (accuracy around 0.32) than the rbf kernel, and also somewhat better than the KNN model.
+
+### Simplified model
+
+To get a model with higher accuracy, we simplify the problem by limiting the data to 2 features, Asset Turnover and Capex to Revenue, and 2 labels, Consumer Discretionary and Utilities.  Running analyze_data_simplify.py and classify_simplify.py, we get the figures below.  The features appear to do a good job of seperating the data, and the learning curve shows a much improved accuracy compared to before.
+
+![alt text](https://github.com/hoytchang/Stock-Classifier/blob/master/figures/Figure_24.png)
+
+![alt text](https://github.com/hoytchang/Stock-Classifier/blob/master/figures/Figure_25.png)
